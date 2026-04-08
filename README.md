@@ -55,15 +55,6 @@ O display LCD apresenta:
 
 ---
 
-## ▶️ Como Executar
-
-1. Monte o circuito no Tinkercad
-2. Carregue o código no Arduino
-3. Simule a variação de luz no LDR
-4. Observe as respostas do sistema
-
----
-
 ## 💻Projeto no TinkerCad
 
 https://www.tinkercad.com/things/4SPotkq88u8-sensor-de-iluminacao-vinheira-agnello-cp1-edge-computing?sharecode=yNmauR47zf7lj8XgIcYD7ijipPQyV0DPyxfF5GH_uKo
