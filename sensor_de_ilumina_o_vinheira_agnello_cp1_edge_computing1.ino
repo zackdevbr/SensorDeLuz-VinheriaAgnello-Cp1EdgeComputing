@@ -1,0 +1,102 @@
+#include <LiquidCrystal.h>
+
+// LCD com a pinagem
+LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2);
+
+// Pinos do projeto
+const int pinoLDR = A0;
+const int ledVerde = 6;
+const int ledAmarelo = 7;
+const int ledVermelho = 8;
+const int buzzer = 9;
+
+// Variáveis
+int valorLDR = 0;
+int luminosidade = 0;
+
+// Controle do buzzer
+unsigned long ultimoTempoBuzzer = 0;
+const unsigned long intervaloBuzzer = 3000;
+
+// Logo do grupo
+byte corrente[8] = {
+  B00100,
+  B01010,
+  B00100,
+  B00000,
+  B00100,
+  B01010,
+  B00100,
+  B00000
+};
+
+// void stup
+void setup() {
+  pinMode(ledVerde, OUTPUT);
+  pinMode(ledAmarelo, OUTPUT);
+  pinMode(ledVermelho, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+
+  lcd.begin(16, 2);
+  lcd.createChar(0, corrente);
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.write(byte(0));
+  lcd.print(" Nexus Dev");
+  lcd.setCursor(0, 1);
+  lcd.print("Bem-vindo!");
+  delay(3000);
+  lcd.clear();
+}
+
+void loop() {
+  long soma = 0;
+  int amostras = 10;
+
+  for (int i = 0; i < amostras; i++) {
+    soma += analogRead(pinoLDR);
+    delay(10);
+  }
+
+  valorLDR = soma / amostras;
+
+  // Converte para porcentagem
+  luminosidade = map(valorLDR, 0, 1023, 0, 100);
+  
+  // Limpa LEDs
+  digitalWrite(ledVerde, LOW);
+  digitalWrite(ledAmarelo, LOW);
+  digitalWrite(ledVermelho, LOW);
+
+  // Exibe valor no LCD
+  lcd.setCursor(0, 0);
+  lcd.print("Luz: ");
+  lcd.print(luminosidade);
+  lcd.print("%   ");
+
+  // Faixas de luminosidade
+  if (luminosidade <= 30) {
+    digitalWrite(ledVerde, HIGH);
+    lcd.setCursor(0, 1);
+    lcd.print("Ambiente OK    ");
+    noTone(buzzer);
+  }
+  else if (luminosidade <= 60) {
+    digitalWrite(ledAmarelo, HIGH);
+    lcd.setCursor(0, 1);
+    lcd.print("Nivel ALERTA   ");
+
+    tone(buzzer, 1000);
+    delay(3000);
+    noTone(buzzer);
+  }
+  else {
+    digitalWrite(ledVermelho, HIGH);
+    lcd.setCursor(0, 1);
+    lcd.print("PROBLEMA!      ");
+    noTone(buzzer);
+  }
+
+  delay(500);
+}
