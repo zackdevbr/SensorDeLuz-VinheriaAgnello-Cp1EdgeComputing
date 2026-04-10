@@ -30,7 +30,42 @@ byte corrente[8] = {
   B00000
 };
 
-// void stup
+// Taça cheia = estado OK
+byte tacaCheia[8] = {
+  B11111,
+  B11111,
+  B11111,
+  B01110,
+  B01110,
+  B00100,
+  B00100,
+  B01110
+};
+
+// Taça rachada = alerta
+byte tacaRachada[8] = {
+  B11111,
+  B11011,
+  B10111,
+  B01110,
+  B01010,
+  B00100,
+  B00100,
+  B01110
+};
+
+// X = problema
+byte xProblema[8] = {
+  B10001,
+  B01010,
+  B00100,
+  B00100,
+  B00100,
+  B01010,
+  B10001,
+  B00000
+};
+
 void setup() {
   pinMode(ledVerde, OUTPUT);
   pinMode(ledAmarelo, OUTPUT);
@@ -38,7 +73,11 @@ void setup() {
   pinMode(buzzer, OUTPUT);
 
   lcd.begin(16, 2);
+
   lcd.createChar(0, corrente);
+  lcd.createChar(1, tacaCheia);
+  lcd.createChar(2, tacaRachada);
+  lcd.createChar(3, xProblema);
 
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -63,7 +102,7 @@ void loop() {
 
   // Converte para porcentagem
   luminosidade = map(valorLDR, 0, 1023, 0, 100);
-  
+
   // Limpa LEDs
   digitalWrite(ledVerde, LOW);
   digitalWrite(ledAmarelo, LOW);
@@ -78,14 +117,21 @@ void loop() {
   // Faixas de luminosidade
   if (luminosidade <= 30) {
     digitalWrite(ledVerde, HIGH);
+
     lcd.setCursor(0, 1);
-    lcd.print("Ambiente OK    ");
+    lcd.print("Ambiente OK   ");
+    lcd.setCursor(15, 1);
+    lcd.write(byte(1)); // taça cheia
+
     noTone(buzzer);
   }
   else if (luminosidade <= 60) {
     digitalWrite(ledAmarelo, HIGH);
+
     lcd.setCursor(0, 1);
-    lcd.print("Nivel ALERTA   ");
+    lcd.print("Nivel ALERTA  ");
+    lcd.setCursor(15, 1);
+    lcd.write(byte(2)); // taça rachada
 
     tone(buzzer, 1000);
     delay(3000);
@@ -93,8 +139,12 @@ void loop() {
   }
   else {
     digitalWrite(ledVermelho, HIGH);
+
     lcd.setCursor(0, 1);
-    lcd.print("PROBLEMA!      ");
+    lcd.print("PROBLEMA!     ");
+    lcd.setCursor(15, 1);
+    lcd.write(byte(3)); // X
+
     noTone(buzzer);
   }
 
