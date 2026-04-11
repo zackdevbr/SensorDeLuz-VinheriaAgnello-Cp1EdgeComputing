@@ -63,7 +63,7 @@ O display LCD apresenta:
 
 ## ▶️ Tinkercad
 
-https://www.tinkercad.com/things/1pyWSeQ51T5-projeto-sensor-de-iluminacao-vinheria-agnello
+https://www.tinkercad.com/things/4SPotkq88u8-sensor-de-iluminacao-vinheira-agnello-cp1-edge-computing?sharecode=yNmauR47zf7lj8XgIcYD7ijipPQyV0DPyxfF5GH_uKo
 
 ---
 
