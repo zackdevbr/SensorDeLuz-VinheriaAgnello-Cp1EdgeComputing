@@ -69,7 +69,7 @@ https://www.tinkercad.com/things/4SPotkq88u8-sensor-de-iluminacao-vinheira-agnel
 
 ## 🎥 Vídeo Explicativo
 
-[(Adicionar link do vídeo aqui)](https://youtu.be/irMgv1CuT1U)
+https://youtu.be/irMgv1CuT1U
 
 ---
 
